@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>De La Cabeza – Sistema de Gestión</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Lexend+Deca:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+
+<div id="loginPage">
+  <div class="login-box">
+    <div class="brand-name">De La Cabeza</div>
+    <div class="brand-name-sub">Peluquería</div>
+    <div class="brand-sub">// Sistema de Gestión //</div>
+    <div class="form-group">
+      <div class="input-label">Email</div>
+      <input type="email" id="loginEmail" class="neon-input" placeholder="admin@barberia.com"/>
+    </div>
+    <div class="form-group" style="margin-bottom:28px;">
+      <div class="input-label">Contraseña</div>
+      <input type="password" id="loginPassword" class="neon-input" placeholder="••••••••"/>
+    </div>
+    <button class="btn-neon-cyan" onclick="doLogin()">
+      <i class="bi bi-lightning-fill me-2"></i> Ingresar
+    </button>
+    <div id="loginError" style="display:none; margin-top:14px; font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--pink); text-align:center; letter-spacing:1px;"></div>
+  </div>
+</div>
+
+<div id="appPage" style="display:none;">
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">De La Cabeza</div>
+      <div class="sidebar-brand-sub">Peluquería</div>
+      <div class="sidebar-sub">// Gestión //</div>
+    </div>
+    <nav style="padding:16px 0; flex:1;">
+      <div class="nav-item-custom active" onclick="showSection('dashboard')" id="nav-dashboard">
+        <i class="bi bi-grid-fill"></i> Dashboard
+      </div>
+      <div class="nav-item-custom" onclick="showSection('cola')" id="nav-cola">
+        <i class="bi bi-lightning-fill"></i> Orden de llegada
+      </div>
+      <div class="nav-item-custom" onclick="showSection('turnos')" id="nav-turnos">
+        <i class="bi bi-calendar-fill"></i> Turnos
+      </div>
+      <div class="nav-item-custom" onclick="showSection('clientes')" id="nav-clientes">
+        <i class="bi bi-person-fill"></i> Clientes
+      </div>
+      <div class="nav-item-custom" onclick="showSection('precios')" id="nav-precios">
+        <i class="bi bi-tag-fill"></i> Precios
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="pulse-dot"></span>
+        <span id="sidebarUser">—</span>
+      </div>
+      <button class="btn-neon-pink btn-sm-neon" onclick="doLogout()">
+        <i class="bi bi-power me-1"></i> Salir
+      </button>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <!-- DASHBOARD -->
+    <div id="section-dashboard" class="page-section active">
+      <div class="page-title neon-cyan">Dashboard</div>
+      <div class="page-subtitle" style="color:var(--text); font-weight:700;">// Estado del negocio hoy //</div>
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-number" id="statEsperando">0</div>
+            <div class="stat-label">Esperando ahora</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-number" id="statTurnos">0</div>
+            <div class="stat-label">Turnos hoy</div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="neon-card">
+            <div style="font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:3px; color:var(--text); font-weight:700; margin-bottom:16px;">// SERVICIOS REALIZADOS HOY //</div>
+            <div id="dashCola"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="neon-card">
+            <div style="font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:3px; color:var(--text); font-weight:700; margin-bottom:16px;">// PRÓXIMOS TURNOS //</div>
+            <div id="dashTurnos"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDEN DE LLEGADA -->
+    <div id="section-cola" class="page-section">
+      <div class="page-title neon-violet">Orden de Llegada</div>
+      <div class="page-subtitle">// Servicios realizados hoy //</div>
+      <div class="neon-card mb-4" style="display:flex; align-items:center; justify-content:space-between; padding:20px 28px;">
+        <div>
+          <div style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--text-dim);">TOTAL RECAUDADO HOY</div>
+          <div id="totalRecaudado" style="font-family:'Lexend Deca',sans-serif; font-size:2.2rem; font-weight:700; color:var(--cyan); text-shadow:var(--glow-c);">$0</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--text-dim);">SERVICIOS REALIZADOS</div>
+          <div id="totalServicios" style="font-family:'Lexend Deca',sans-serif; font-size:2.2rem; font-weight:700; color:var(--text);">0</div>
+        </div>
+      </div>
+      <div class="row g-3" id="contadoresContainer"></div>
+      <div class="mt-4">
+        <button class="btn-neon-violet" style="width:auto; padding:10px 24px;" onclick="openModal('modalNuevoServicio')">
+          <i class="bi bi-plus-lg me-2"></i> Agregar tipo de servicio
+        </button>
+      </div>
+    </div>
+
+    <!-- PRECIOS -->
+    <div id="section-precios" class="page-section">
+      <div class="page-title" style="color:var(--text);">Precios</div>
+      <div class="page-subtitle">// Actualizar precios de servicios //</div>
+      <div class="row g-3" id="preciosList"></div>
+    </div>
+
+    <!-- TURNOS -->
+    <div id="section-turnos" class="page-section">
+      <div class="page-title neon-pink">Turnos</div>
+      <div class="page-subtitle">// Agenda del día //</div>
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <button class="btn-neon-cyan" style="width:auto; padding:10px 24px;" onclick="openModal('modalTurno')">
+          <i class="bi bi-calendar-plus-fill me-2"></i> Nuevo turno
+        </button>
+        <input type="date" id="filtroFecha" class="neon-input" style="width:auto;" onchange="loadTurnos()"/>
+      </div>
+      <div class="neon-card">
+        <table class="neon-table">
+          <thead>
+            <tr>
+              <th>Hora</th><th>Cliente</th><th>Servicio</th><th>Estado</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="turnosBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div id="section-clientes" class="page-section">
+      <div class="page-title" style="color:var(--text);">Clientes</div>
+      <div class="page-subtitle">// Base de datos //</div>
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <button class="btn-neon-cyan" style="width:auto; padding:10px 24px;" onclick="openModal('modalCliente')">
+          <i class="bi bi-person-plus-fill me-2"></i> Nuevo cliente
+        </button>
+        <input type="text" id="buscarCliente" class="neon-input" style="width:260px;" placeholder="Buscar por nombre..." oninput="buscarClientes()"/>
+      </div>
+      <div class="neon-card">
+        <table class="neon-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="clientesBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /appPage -->
+
+<!-- MODALS -->
+
+<div class="neon-modal-overlay" id="modalNuevoServicio">
+  <div class="neon-modal" style="max-width:400px;">
+    <div class="modal-title neon-violet">Nuevo Tipo de Servicio</div>
+    <div class="form-group">
+      <div class="input-label">Nombre del servicio</div>
+      <input type="text" id="nuevoServicioNombre" class="neon-input" placeholder="Ej: TINTURA, CEJAS..."/>
+    </div>
+    <div class="form-group">
+      <div class="input-label">Precio</div>
+      <input type="number" id="nuevoServicioPrecio" class="neon-input" placeholder="0" min="0"/>
+    </div>
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn-neon-cyan" style="width:auto; flex:1;" onclick="crearNuevoServicio()">Crear</button>
+      <button class="btn-neon-pink" style="width:auto; flex:1;" onclick="closeModal('modalNuevoServicio')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="neon-modal-overlay" id="modalTurno">
+  <div class="neon-modal">
+    <div class="modal-title neon-pink">Nuevo Turno</div>
+    <div class="form-group">
+      <div class="input-label">Cliente</div>
+      <select id="turnoClienteId" class="neon-input"></select>
+    </div>
+    <div class="row g-3">
+      <div class="col-6">
+        <div class="form-group">
+          <div class="input-label">Fecha</div>
+          <input type="date" id="turnoFecha" class="neon-input"/>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <div class="input-label">Hora</div>
+          <input type="time" id="turnoHora" class="neon-input"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-label">Servicio</div>
+      <select id="turnoServicio" class="neon-input">
+        <option value="CORTE">Corte</option>
+        <option value="BARBA">Barba</option>
+        <option value="COMBO">Combo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="input-label">Notas (opcional)</div>
+      <input type="text" id="turnoNotas" class="neon-input" placeholder="Observaciones..."/>
+    </div>
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn-neon-cyan" style="width:auto; flex:1;" onclick="crearTurno()">Confirmar</button>
+      <button class="btn-neon-pink" style="width:auto; flex:1;" onclick="closeModal('modalTurno')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="neon-modal-overlay" id="modalCliente">
+  <div class="neon-modal">
+    <div class="modal-title neon-cyan" id="modalClienteTitulo">Nuevo Cliente</div>
+    <input type="hidden" id="clienteId"/>
+    <div class="form-group">
+      <div class="input-label">Nombre</div>
+      <input type="text" id="clienteNombre" class="neon-input" placeholder="Nombre completo"/>
+    </div>
+    <div class="form-group">
+      <div class="input-label">Teléfono</div>
+      <input type="text" id="clienteTelefono" class="neon-input" placeholder="Número de teléfono"/>
+    </div>
+    <div class="form-group">
+      <div class="input-label">Email (opcional)</div>
+      <input type="email" id="clienteEmail" class="neon-input" placeholder="correo@ejemplo.com"/>
+    </div>
+    <div class="d-flex gap-2 mt-3">
+      <button class="btn-neon-cyan" style="width:auto; flex:1;" onclick="guardarCliente()">Guardar</button>
+      <button class="btn-neon-pink" style="width:auto; flex:1;" onclick="closeModal('modalCliente')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="neon-alert" id="toastAlert"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/cola.js"></script>
+<script src="js/turnos.js"></script>
+<script src="js/clientes.js"></script>
+<script src="js/servicios.js"></script>
+
+</body>
+</html>

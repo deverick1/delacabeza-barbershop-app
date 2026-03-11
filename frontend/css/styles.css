@@ -1,0 +1,564 @@
+/* ═══════════════════════════════════════
+   DeadCut – Barbería System
+   styles.css
+═══════════════════════════════════════ */
+
+:root {
+  --bg:        #07070d;
+  --bg2:       #0d0d1a;
+  --cyan:      #00f5ff;
+  --violet:    #bf00ff;
+  --pink:      #ff0080;
+  --text:      #e8e8f0;
+  --text-dim:  #7a7a9a;
+  --border:    rgba(0,245,255,0.15);
+  --card-bg:   rgba(13,13,26,0.92);
+  --glow-c:    0 0 8px #00f5ff, 0 0 20px rgba(0,245,255,0.4);
+  --glow-v:    0 0 8px #bf00ff, 0 0 20px rgba(191,0,255,0.4);
+  --glow-p:    0 0 8px #ff0080, 0 0 20px rgba(255,0,128,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lexend Deca', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scanline effect */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Noise grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 9998;
+}
+
+/* ─── NEON TEXT ─── */
+.neon-cyan   { color: var(--cyan);   text-shadow: var(--glow-c); }
+.neon-violet { color: var(--violet); text-shadow: var(--glow-v); }
+.neon-pink   { color: var(--pink);   text-shadow: var(--glow-p); }
+
+
+/* ─── BRAND ─── */
+.brand-name {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+}
+.brand-name-sub {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 8px;
+  text-align: center;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.brand-sub {
+  text-align: center;
+  color: var(--text-dim);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+/* ─── INPUTS ─── */
+.neon-input {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(0,245,255,0.2);
+  border-radius: 2px;
+  color: var(--cyan);
+  font-family: 'Space Mono', monospace;
+  padding: 12px 16px;
+  width: 100%;
+  transition: all 0.3s;
+  outline: none;
+}
+.neon-input:focus {
+  border-color: var(--cyan);
+  box-shadow: var(--glow-c);
+  background: rgba(0,245,255,0.05);
+}
+.neon-input::placeholder { color: var(--text-dim); }
+.neon-input option { background: var(--bg2); color: var(--text); }
+
+.input-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ─── BUTTONS ─── */
+.btn-neon-cyan {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.btn-neon-cyan:hover {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: var(--glow-c);
+}
+.btn-neon-violet {
+  background: transparent;
+  border: 1px solid var(--violet);
+  color: var(--violet);
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.btn-neon-violet:hover {
+  background: var(--violet);
+  color: #fff;
+  box-shadow: var(--glow-v);
+}
+.btn-neon-pink {
+  background: transparent;
+  border: 1px solid var(--pink);
+  color: var(--pink);
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.btn-neon-pink:hover {
+  background: var(--pink);
+  color: #fff;
+  box-shadow: var(--glow-p);
+}
+.btn-sm-neon {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  letter-spacing: 1px;
+}
+
+/* ─── LOGIN ─── */
+#loginPage {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(191,0,255,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,245,255,0.10) 0%, transparent 70%),
+    var(--bg);
+}
+.login-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 48px 40px;
+  width: 100%; max-width: 420px;
+  position: relative;
+}
+.login-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan), var(--pink));
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 240px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  z-index: 100;
+}
+.sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo {
+  font-size: 36px;
+  display: block;
+  animation: flicker 4s infinite;
+}
+.sidebar-brand {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sidebar-brand-sub {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.sidebar-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+.nav-item-custom {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: 'Lexend Deca', sans-serif;
+  user-select: none;
+}
+.nav-item-custom:hover {
+  color: var(--cyan);
+  border-left-color: var(--cyan);
+  background: rgba(0,245,255,0.05);
+}
+.nav-item-custom.active {
+  color: var(--cyan);
+  border-left-color: var(--cyan);
+  background: rgba(0,245,255,0.08);
+  text-shadow: var(--glow-c);
+}
+.nav-item-custom i { font-size: 1.1rem; width: 20px; }
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+}
+.user-info {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+/* ─── MAIN CONTENT ─── */
+.main-content {
+  margin-left: 240px;
+  padding: 32px;
+  min-height: 100vh;
+}
+.page-section { display: none; }
+.page-section.active { display: block; }
+.page-title {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+.page-subtitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+/* ─── CARDS ─── */
+.neon-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.neon-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px 24px;
+}
+.stat-number {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ─── TABLE ─── */
+.neon-table { width: 100%; border-collapse: collapse; }
+.neon-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.neon-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(0,245,255,0.05);
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Lexend Deca', sans-serif;
+  vertical-align: middle;
+}
+.neon-table tr:hover td { background: rgba(0,245,255,0.03); }
+
+/* ─── BADGES ─── */
+.badge-neon {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.badge-cyan   { background: rgba(0,245,255,0.15);  color: var(--cyan);   border: 1px solid rgba(0,245,255,0.3); }
+.badge-violet { background: rgba(191,0,255,0.15);  color: var(--violet); border: 1px solid rgba(191,0,255,0.3); }
+.badge-pink   { background: rgba(255,0,128,0.15);  color: var(--pink);   border: 1px solid rgba(255,0,128,0.3); }
+.badge-green  { background: rgba(0,255,128,0.15);  color: #00ff80;       border: 1px solid rgba(0,255,128,0.3); }
+.badge-dim    { background: rgba(122,122,154,0.15); color: var(--text-dim); border: 1px solid rgba(122,122,154,0.3); }
+
+/* ─── MODAL ─── */
+.neon-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none; align-items: center; justify-content: center;
+}
+.neon-modal-overlay.open { display: flex; }
+.neon-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  width: 100%; max-width: 480px;
+  position: relative;
+}
+.neon-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  box-shadow: 0 0 8px var(--cyan);
+}
+.modal-title {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
+
+/* ─── FORM ─── */
+.form-group { margin-bottom: 20px; }
+
+/* ─── COLA ─── */
+.cola-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 10px;
+  transition: all 0.3s;
+}
+.cola-item.en-atencion {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(0,245,255,0.2);
+}
+.cola-numero {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  min-width: 48px;
+  text-align: center;
+}
+.cola-info { flex: 1; }
+.cola-nombre {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.cola-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* ─── TOAST ─── */
+.neon-alert {
+  position: fixed; top: 24px; right: 24px;
+  background: var(--bg2);
+  border: 1px solid var(--cyan);
+  box-shadow: var(--glow-c);
+  color: var(--cyan);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 14px 20px;
+  border-radius: 2px;
+  z-index: 9000;
+  display: none;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ─── MISC ─── */
+.neon-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 24px 0;
+}
+.pulse-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: var(--glow-c);
+  animation: pulse 2s infinite;
+  margin-right: 8px;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.3); }
+}
+
+/* ─── CONTADORES COLA ─── */
+.contador-card {
+  text-align: center;
+  padding: 32px 24px;
+}
+.contador-servicio {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.contador-precio {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.contador-numero {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+  transition: all 0.2s;
+}
+.contador-numero.activo {
+  color: var(--cyan);
+  text-shadow: var(--glow-c);
+}
+.contador-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ─── PRECIOS ─── */
+.precio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  position: relative;
+}
+.precio-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet), transparent);
+}
+.precio-servicio-nombre {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.precio-actual {
+  font-family: 'Lexend Deca', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
