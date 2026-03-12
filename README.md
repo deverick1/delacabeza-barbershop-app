@@ -90,54 +90,6 @@ barberiapp-frontend/               ← Frontend
 
 ---
 
-## Configuración
-
-### Base de datos
-
-Crear la base de datos en MySQL (se crea automáticamente si no existe):
-
-```sql
-CREATE DATABASE barberia_db;
-```
-
-### application.properties
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/barberia_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Argentina/Buenos_Aires
-spring.datasource.username=root
-spring.datasource.password=1234
-spring.jpa.hibernate.ddl-auto=update
-jwt.secret=clave-super-secreta-para-barberia-cambiar-en-produccion-1234567890
-jwt.expiration=86400000
-server.port=8080
-```
-
----
-
-## Cómo correr el proyecto
-
-### Backend
-
-```bash
-cd barberiapp
-./mvnw spring-boot:run
-```
-
-El servidor levanta en `http://localhost:8080`
-
-### Frontend
-
-Abrir `barberiapp-frontend/index.html` directamente en el navegador.
-
-### Credenciales por defecto
-
-| Campo | Valor |
-|-------|-------|
-| Email | admin@barberia.com |
-| Contraseña | admin123 |
-
----
-
 ## Funcionalidades
 
 ### Dashboard
